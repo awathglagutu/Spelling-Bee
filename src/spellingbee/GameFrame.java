@@ -3,8 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package spellingbee;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
 import javax.swing.JOptionPane;
 /**
  *
@@ -31,13 +36,13 @@ public class GameFrame extends javax.swing.JFrame {
         hintTextArea.setOpaque(true);
         
         words = WorldLoader.loadWords("words.txt");
-        startGame();
     }
         
     private void startGame(){
         score = 0;
         scoresLabel.setText(String.valueOf(score));
         nextWord();
+        playCurrentQuestion();
     }
     
     private void nextWord(){
@@ -45,13 +50,43 @@ public class GameFrame extends javax.swing.JFrame {
         
         currentWord = words.get(random.nextInt(words.size()));
         
-        wordLabel.setText(currentWord.getSpelling());
+        wordLabel.setText("");
         
         hintTextArea.setText(currentWord.getDefinition());
         
         answerField.setText("");
     }
     
+    private void playCurrentQuestion(){
+        playAudio("audio/canyouspell.wav");
+        playAudio(currentWord.getAudioPath());
+    }
+    
+    private void playAudio(String path){
+    try {
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(path));
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+
+        Object lock = new Object();
+        clip.addLineListener(event -> {
+            if (event.getType() == LineEvent.Type.STOP) {
+                synchronized (lock) {
+                    lock.notifyAll();
+                }
+            }
+        });
+
+        clip.start();
+
+        synchronized (lock) {
+            lock.wait(); // waits until STOP event fires
+        }
+        clip.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
     
 
     /**
@@ -74,6 +109,7 @@ public class GameFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         hintTextArea = new javax.swing.JTextArea();
         spellText = new javax.swing.JLabel();
+        startButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,7 +130,7 @@ public class GameFrame extends javax.swing.JFrame {
 
         wordLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         wordLabel.setForeground(new java.awt.Color(255, 51, 51));
-        wordLabel.setText("Word");
+        wordLabel.setText("-");
 
         scoresText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         scoresText.setText("Scores");
@@ -154,7 +190,7 @@ public class GameFrame extends javax.swing.JFrame {
                     .addComponent(answerText))
                 .addGap(35, 35, 35)
                 .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(scoresText)
                     .addComponent(scoresLabel))
@@ -164,6 +200,15 @@ public class GameFrame extends javax.swing.JFrame {
         spellText.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
         spellText.setText("Spell");
 
+        startButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        startButton.setForeground(new java.awt.Color(0, 91, 78));
+        startButton.setText("Start");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,13 +217,17 @@ public class GameFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(spellText)
+                .addGap(35, 35, 35)
+                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(spellText)
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(spellText)
+                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -200,7 +249,13 @@ public class GameFrame extends javax.swing.JFrame {
         }
         scoresLabel.setText(String.valueOf(score));
         nextWord();
+        playCurrentQuestion();
     }//GEN-LAST:event_submitButtonActionPerformed
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        // TODO add your handling code here:
+        startGame();
+    }//GEN-LAST:event_startButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,6 +292,7 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JLabel scoresLabel;
     private javax.swing.JLabel scoresText;
     private javax.swing.JLabel spellText;
+    private javax.swing.JButton startButton;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel wordLabel;
     // End of variables declaration//GEN-END:variables
