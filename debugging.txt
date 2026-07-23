@@ -1,0 +1,48 @@
+//Audio problem -----------------------------------------
+    
+private void playAudio(String path){
+        
+        try{
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(path));
+            
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+            
+            while(clip.isRunning()){
+                Thread.sleep(10);
+            }
+            clip.close();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+Fixed Version by Claude ai ---------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    private void playAudio(String path){
+    try {
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(path));
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+
+        Object lock = new Object();
+        clip.addLineListener(event -> {
+            if (event.getType() == LineEvent.Type.STOP) {
+                synchronized (lock) {
+                    lock.notifyAll();
+                }
+            }
+        });
+
+        clip.start();
+
+        synchronized (lock) {
+            lock.wait(); // waits until STOP event fires
+        }
+        clip.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+----------------------------------------------------------------------------------
