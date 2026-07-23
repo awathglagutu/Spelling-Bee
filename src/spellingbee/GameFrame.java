@@ -30,41 +30,10 @@ public class GameFrame extends javax.swing.JFrame {
         hintTextArea.setEditable(false);
         hintTextArea.setOpaque(true);
         
-        createWordList();
+        words = WorldLoader.loadWords("words.txt");
         startGame();
     }
-    
-    private void createWordList(){
-        words.add(new Word(
-                "imprisonment",
-                "The state of being kept in prison as a punishment",
-                ""
-        ));
         
-        words.add(new Word(
-                "hypothesis",
-                "A proposed explanation for a phenomenon made as a starting point for further investigation",
-                ""
-        ));
-        
-        words.add(new Word(
-                "juxtaposition",
-                "The fact of two things being seen or palced close together with contrasting effect",
-                ""
-        ));
-        words.add(new Word(
-                "acquiesce",
-                "To accept, agree, or give in to someting reluctantly without protesting",
-                ""));
-        
-        words.add(new Word(
-                "participation",
-                "The action of taking part in something",
-                "Testing branch"
-        ));
-        
-    }
-    
     private void startGame(){
         score = 0;
         scoresLabel.setText(String.valueOf(score));
