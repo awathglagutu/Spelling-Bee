@@ -60,7 +60,7 @@ public class GameFrame extends javax.swing.JFrame {
         words.add(new Word(
                 "participation",
                 "The action of taking part in something",
-                "Test Changes"
+                "Testing branch"
         ));
         
     }
