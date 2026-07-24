@@ -3,13 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package spellingbee;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineEvent;
 import javax.swing.JOptionPane;
 /**
  *
@@ -58,55 +53,9 @@ public class GameFrame extends javax.swing.JFrame {
     }
     
     private void playCurrentQuestion(){
-        playAudio("audio/canyouspell.wav");
-        playAudio(currentWord.getAudioPath());
-    }
-    
-    private void playAudio(String path){
-    try {
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(path));
-        Clip clip = AudioSystem.getClip();
-        clip.open(audioStream);
-
-        Object lock = new Object();
-        clip.addLineListener(event -> {
-            if (event.getType() == LineEvent.Type.STOP) {
-                synchronized (lock) {
-                    lock.notifyAll();
-                }
-            }
-        });
-
-        clip.start();
-
-        synchronized (lock) {
-            lock.wait(); // waits until STOP event fires
-        }
-        clip.close();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    }
-    
-    private void playSound(String path){
-    try{
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(path));
-        Clip clip = AudioSystem.getClip();
-        clip.open(audioStream);
-        
-        clip.addLineListener(event -> {
-            if (event.getType() == LineEvent.Type.STOP){
-                clip.close();
-            }
-        });
-        
-        clip.start();
-        
-    }catch(Exception e){
-        e.printStackTrace();
-    }
-    }
-    
+        AudioPlayer.playAudio("audio/canyouspell.wav");
+        AudioPlayer.playAudio(currentWord.getAudioPath());
+    } 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -260,11 +209,11 @@ public class GameFrame extends javax.swing.JFrame {
         
         if(answer.equalsIgnoreCase(currentWord.getSpelling())){
             score++;
-            playSound("sound/correct.wav");
+            AudioPlayer.playSound("sound/correct.wav");
             JOptionPane.showMessageDialog(this, "Correct!");
         }
         else {
-            playSound("sound/incorrect.wav");
+            AudioPlayer.playSound("sound/incorrect.wav");
             JOptionPane.showMessageDialog(this, "Wrong!\nCorrect Answer: " + currentWord.getSpelling());
         }
         scoresLabel.setText(String.valueOf(score));
