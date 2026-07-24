@@ -1,6 +1,3 @@
-alphabet|A set of letters or symbols used to write a language.|audio/alphabet.wav
-anatomical|Relating to the bodily structure of humans, animals, or other living organisms.|audio/anatomical.wav
-answer|A reply or response to a question, problem, or call.|audio/answer.wav
 abolish|To officially put an end to a law, system, or practice.|audio/abolish.wav
 absence|The state of being away or not being present.|audio/absence.wav
 abstract|Existing as an idea or feeling rather than as a physical object.|audio/abstract.wav
@@ -14,34 +11,21 @@ armour|Metal coverings or protective layers worn to prevent injury in battle.|au
 atone|To make amends or reparations for a wrong or sin.|audio/atone.wav
 automatic|Working by itself with little or no direct human control.|audio/automatic.wav
 await|To wait for something.|audio/await.wav
-biography|An account of someone's life written by someone else.|audio/biography.wav
-bizarre|Extremely unconventional, unusual, or strange.|audio/bizarre.wav
-breakthrough|A sudden, important discovery or development.|audio/breakthrough.wav
 bamboo|A tall, fast-growing tropical grass with hollow woody stems.|audio/bamboo.wav
 bayonet|A blade attached to the muzzle of a rifle for use in hand-to-hand combat.|audio/bayonet.wav
 beach|A pebbly or sandy shore along the edge of the sea or a lake.|audio/beach.wav
 betray|To be disloyal to someone or break their trust.|audio/betray.wav
 broccoli|A vegetable with a thick green stem and clusters of flower buds at the top.|audio/broccoli.wav
-center|The middle point or part of something.|audio/center.wav
-chicken|A common domesticated bird farmed for its meat and eggs.|audio/chicken.wav
-chronic|Lasting for a long time or constantly recurring.|audio/chronic.wav
 catalogue|A complete list of items, such as goods in a store or books in a library.|audio/catalogue.wav
 church|A building used for public Christian worship.|audio/church.wav
 congratulate|To praise someone for a special achievement or good fortune.|audio/congratulate.wav
 cooking|The practice or skill of preparing food by heating it.|audio/cooking.wav
 creeper|A plant that grows along the ground or climbs up surfaces by clinging.|audio/creeper.wav
 curious|Eager to know or learn something.|audio/curious.wav
-damage|Physical harm or destruction caused to something.|audio/damage.wav
-debris|Scattered pieces of rubbish, wreckage, or remains.|audio/debris.wav
-diesel|A type of heavy petroleum oil used as fuel for internal combustion engines.|audio/diesel.wav
+
 daffodil|A bright yellow spring flower with a trumpet-shaped center.|audio/daffodil.wav
 dilate|To make or become wider, larger, or more open.|audio/dilate.wav
 dolphin|A smart, playful sea mammal known for swimming in groups and leaping out of the water.|audio/dolphin.wav
-enact|To put a law or proposal into practice.|audio/enact.wav
-excellent|Extremely good or of high quality.|audio/excellent.wav
-familiar|Well known from close association or frequent experience.|audio/familiar.wav
-firefighter|A person whose job is to extinguish fires and rescue people.|audio/firefighter.wav
-flavour|The distinctive taste of a food or drink.|audio/flavour.wav
 formidable|Inspiring respect or fear through being impressively powerful, large, or difficult.|audio/formidable.wav
 frolic|To play and move around cheerfully, excitedly, or energetically.|audio/frolic.wav
 furious|Extremely angry.|audio/furious.wav
@@ -52,32 +36,24 @@ growl|A low, deep, angry sound made by an animal like a dog.|audio/growl.wav
 guideline|A general rule, piece of advice, or principle that helps direct action or behavior.|audio/guideline.wav
 harbour|A place on the coast where ships can shelter safely from rough water.|audio/harbour.wav
 heresy|A belief or opinion that strongly goes against traditional or accepted beliefs, especially in religion.|audio/heresy.wav
+
 immobilize|To prevent something or someone from moving or operating.|audio/immobilize.wav
 integrity|The quality of being honest and having strong moral principles.|audio/integrity.wav
 ionize|To convert an atom or molecule into an electrically charged ion by gaining or losing electrons.|audio/ionize.wav
 jaded|Tired, bored, or lacking enthusiasm, typically after having too much of something.|audio/jaded.wav
-lactose|A type of sugar found naturally in milk and dairy products.|audio/lactose.wav
-larix|The scientific genus name for larch trees, which are conifers that shed their needles in autumn.|audio/larix.wav
-lather|A frothy, white mass of bubbles formed by soap or detergent mixed with water.|audio/lather.wav
 leafy|Having a lot of leaves or covered with foliage.|audio/leafy.wav
 liable|Legally responsible for something, or likely to happen or do something.|audio/liable.wav
 lightning|A sudden flash of bright electrical discharge in the atmosphere during a storm.|audio/lightning.wav
-meditate|To engage in mental exercise, such as mindfulness or focusing the mind, for relaxation or spiritual growth.|audio/meditate.wav
 magnificent|Extremely beautiful, elaborate, or impressive.|audio/magnificent.wav
-normal|Conforming to a standard, regular, typical, or expected pattern.|audio/normal.wav
-oasis|A fertile patch in a desert where water is found, or a peaceful escape from a busy environment.|audio/oasis.wav
-obesity|A medical condition characterized by an excessive and unhealthy amount of body fat.|audio/obesity.wav
 offender|A person who commits an illegal act or breaks a rule.|audio/offender.wav
 overdue|Not having arrived, happened, or been paid by the expected time.|audio/overdue.wav
-probably|More likely than not; reasonably expected or appearing to be true.|audio/probably.wav
-pulsar|A highly magnetized, rotating neutron star that emits beams of electromagnetic radiation.|audio/pulsar.wav
-pumpkin|A large, round, orange-yellow gourd with a thick rind and edible seeds.|audio/pumpkin.wav
 paradox|A seemingly absurd or self-contradictory statement that turns out to reveal a truth.|audio/paradox.wav
 password|A secret word or phrase used to gain access to a computer system or service.|audio/password.wav
 pigeon|A stout-bodied bird with a small head, short legs, and a cooing voice, often found in cities.|audio/pigeon.wav
 plethora|A large or excessive amount of something.|audio/plethora.wav
 powder|A fine, dry substance made of tiny, crushed particles.|audio/powder.wav
 present|Currently existing or in a particular place, or a gift given to someone.|audio/present.wav
+
 pursuit|The act of following or chasing someone or something, or trying to achieve a goal.|audio/pursuit.wav
 purple|A color formed by mixing red and blue.|audio/purple.wav
 recipient|A person who receives something.|audio/recipient.wav
@@ -96,13 +72,11 @@ sniffle|To draw air up through the nose repeatedly, typically because of a cold 
 special|Better, greater, or otherwise different from usual.|audio/special.wav
 spooky|Sinister or ghostly; causing fear or unease.|audio/spooky.wav
 strategic|Carefully designed or planned to achieve a particular goal or long-term advantage.|audio/strategic.wav
+ 
 subsidy|A sum of money granted by the government or a public body to help an industry or business keep prices low or stable.|audio/subsidy.wav
 sunflower|A tall plant with a large, bright yellow flower head that turns to face the sun.|audio/sunflower.wav
 swamp|An area of low, wet land where trees and shrubs grow.|audio/swamp.wav
 syntax|The arrangement of words and phrases to create well-formed sentences in a language.|audio/syntax.wav
-tremendous|Very great in amount, scale, intensity, or excellence.|audio/tremendous.wav
-trinity|A group of three people, things, or qualities closely associated with each other.|audio/trinity.wav
-twenty|The cardinal number that is the sum of ten and ten.|audio/twenty.wav
 tangerine|A small, sweet citrus fruit with a loose, easily peeled skin.|audio/tangerine.wav
 telepathy|The supposed communication of thoughts or ideas by means other than the known senses.|audio/telepathy.wav
 thesis|A long essay or dissertation involving personal research, written by a candidate for a university degree.|audio/thesis.wav

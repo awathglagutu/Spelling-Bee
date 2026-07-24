@@ -86,9 +86,27 @@ public class GameFrame extends javax.swing.JFrame {
     } catch (Exception e) {
         e.printStackTrace();
     }
-}
+    }
     
-
+    private void playSound(String path){
+    try{
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(path));
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioStream);
+        
+        clip.addLineListener(event -> {
+            if (event.getType() == LineEvent.Type.STOP){
+                clip.close();
+            }
+        });
+        
+        clip.start();
+        
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -242,9 +260,11 @@ public class GameFrame extends javax.swing.JFrame {
         
         if(answer.equalsIgnoreCase(currentWord.getSpelling())){
             score++;
+            playSound("sound/correct.wav");
             JOptionPane.showMessageDialog(this, "Correct!");
         }
         else {
+            playSound("sound/incorrect.wav");
             JOptionPane.showMessageDialog(this, "Wrong!\nCorrect Answer: " + currentWord.getSpelling());
         }
         scoresLabel.setText(String.valueOf(score));
