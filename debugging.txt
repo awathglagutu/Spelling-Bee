@@ -46,3 +46,11 @@ Fixed Version by Claude ai ---------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     }
 }
 ----------------------------------------------------------------------------------
+
+new Help from chatgpt and claude ai for timer:
+
+- class GameTimer
+- usage of user defined method class GameTimer
+
+----------------------------------------------------------------------------------
+
