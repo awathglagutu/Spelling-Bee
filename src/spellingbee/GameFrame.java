@@ -17,6 +17,7 @@ public class GameFrame extends javax.swing.JFrame {
     
     int score = 0;
     int questionNumber = 0;
+    private GameTimer gameTimer;
     
     
     /**
@@ -31,13 +32,22 @@ public class GameFrame extends javax.swing.JFrame {
         hintTextArea.setOpaque(true);
         
         words = WorldLoader.loadWords("words.txt");
+        gameTimer = new GameTimer(10,
+        () -> timerProgress.setValue(gameTimer.getTimeLeft()),
+        () -> evaluateAnswer());
     }
         
     private void startGame(){
         score = 0;
         scoresLabel.setText(String.valueOf(score));
+        loadNextQuestion();
+    }
+    
+    private void loadNextQuestion(){
         nextWord();
         playCurrentQuestion();
+        timerProgress.setValue(timerProgress.getMaximum());
+        gameTimer.restart();
     }
     
     private void nextWord(){
@@ -75,6 +85,8 @@ public class GameFrame extends javax.swing.JFrame {
         scoresLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         hintTextArea = new javax.swing.JTextArea();
+        timerText = new javax.swing.JLabel();
+        timerProgress = new javax.swing.JProgressBar();
         spellText = new javax.swing.JLabel();
         startButton = new javax.swing.JButton();
 
@@ -113,6 +125,12 @@ public class GameFrame extends javax.swing.JFrame {
         hintTextArea.setRows(5);
         jScrollPane1.setViewportView(hintTextArea);
 
+        timerText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        timerText.setForeground(new java.awt.Color(255, 0, 102));
+        timerText.setText("Timer");
+
+        timerProgress.setMaximum(10);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -135,13 +153,18 @@ public class GameFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(answerField, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scoresLabel)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(scoresLabel)
+                        .addGap(103, 103, 103)
+                        .addComponent(timerText)
+                        .addGap(18, 18, 18)
+                        .addComponent(timerProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(80, 80, 80))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(wordLabel)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,9 +181,12 @@ public class GameFrame extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(scoresText)
-                    .addComponent(scoresLabel))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(scoresText)
+                        .addComponent(scoresLabel)
+                        .addComponent(timerText))
+                    .addComponent(timerProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(79, 79, 79))
         );
 
@@ -203,9 +229,9 @@ public class GameFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        // TODO add your handling code here:
-        String answer = answerField.getText();
+    private void evaluateAnswer(){
+        gameTimer.stop();
+                String answer = answerField.getText();
         
         if(answer.equalsIgnoreCase(currentWord.getSpelling())){
             score++;
@@ -214,11 +240,15 @@ public class GameFrame extends javax.swing.JFrame {
         }
         else {
             AudioPlayer.playSound("sound/incorrect.wav");
-            JOptionPane.showMessageDialog(this, "Wrong!\nCorrect Answer: " + currentWord.getSpelling());
+            JOptionPane.showMessageDialog(this, "Correct Answer: " + currentWord.getSpelling(), "Wrong Answer!", JOptionPane.ERROR_MESSAGE);
         }
         scoresLabel.setText(String.valueOf(score));
-        nextWord();
-        playCurrentQuestion();
+        loadNextQuestion();
+    }
+    
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        // TODO add your handling code here:
+        evaluateAnswer();
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
@@ -263,6 +293,8 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JLabel spellText;
     private javax.swing.JButton startButton;
     private javax.swing.JButton submitButton;
+    private javax.swing.JProgressBar timerProgress;
+    private javax.swing.JLabel timerText;
     private javax.swing.JLabel wordLabel;
     // End of variables declaration//GEN-END:variables
 }
