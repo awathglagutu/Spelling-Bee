@@ -31,6 +31,9 @@ public class GameFrame extends javax.swing.JFrame {
         hintTextArea.setEditable(false);
         hintTextArea.setOpaque(true);
         
+        answerField.setEnabled(false);
+        submitButton.setEnabled(false);
+        
         words = WorldLoader.loadWords("words.txt");
         gameTimer = new GameTimer(10,
         () -> timerProgress.setValue(gameTimer.getTimeLeft()),
@@ -40,6 +43,9 @@ public class GameFrame extends javax.swing.JFrame {
     private void startGame(){
         score = 0;
         scoresLabel.setText(String.valueOf(score));
+        answerField.setEnabled(true);
+        submitButton.setEnabled(true);
+                
         loadNextQuestion();
     }
     
@@ -154,8 +160,8 @@ public class GameFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(answerField, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(scoresLabel)
-                        .addGap(103, 103, 103)
+                        .addComponent(scoresLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)
                         .addComponent(timerText)
                         .addGap(18, 18, 18)
                         .addComponent(timerProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -234,16 +240,37 @@ public class GameFrame extends javax.swing.JFrame {
                 String answer = answerField.getText();
         
         if(answer.equalsIgnoreCase(currentWord.getSpelling())){
-            score++;
+            scoresLabel.setText(String.valueOf(++score));
             AudioPlayer.playSound("sound/correct.wav");
             JOptionPane.showMessageDialog(this, "Correct!");
         }
         else {
             AudioPlayer.playSound("sound/incorrect.wav");
             JOptionPane.showMessageDialog(this, "Correct Answer: " + currentWord.getSpelling(), "Wrong Answer!", JOptionPane.ERROR_MESSAGE);
+            gameOver();
+            return;
         }
-        scoresLabel.setText(String.valueOf(score));
         loadNextQuestion();
+    }
+    
+    private void gameOver(){
+        gameTimer.stop();
+        timerProgress.setValue(timerProgress.getMinimum());
+        
+        JOptionPane.showMessageDialog(
+        this, "Game Over!\nYour scores: " + score,
+               "Game Over",
+               JOptionPane.INFORMATION_MESSAGE
+        );
+        
+        score = 0; scoresLabel.setText(String.valueOf(score));
+        
+        hintTextArea.setText("");
+        answerField.setText("");
+        
+        answerField.setEnabled(false);
+        submitButton.setEnabled(false);
+        startButton.setEnabled(true);
     }
     
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
@@ -254,6 +281,8 @@ public class GameFrame extends javax.swing.JFrame {
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         // TODO add your handling code here:
         startGame();
+        startButton.setEnabled(false);
+        
     }//GEN-LAST:event_startButtonActionPerformed
 
     /**
