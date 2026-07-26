@@ -23,7 +23,28 @@ public class SettingsDialog extends javax.swing.JDialog {
         
         setResizable(false);
         setLocationRelativeTo(parent);
+        loadSettings();
     }
+    
+    private void loadSettings(){
+        soundEffectToggleButton.setSelected(settings.isSoundEnabled());
+        endlessModeToggleButton.setSelected(settings.isEndlessModeEnabled());
+        timerToggleButton.setSelected(settings.isTimerEnabled());
+        showHintToggleButton.setSelected(settings.isShowHintEnabled());
+        
+        themeComboBox.setSelectedItem(settings.getTheme());
+    }
+    
+    private void saveSettings(){
+        settings.setSoundEnabled(soundEffectToggleButton.isSelected());
+        settings.setEndlessModeEnabled(endlessModeToggleButton.isSelected());
+        settings.setTimerEnabled(timerToggleButton.isSelected());
+        settings.setShowHintEnabled(showHintToggleButton.isSelected());
+        
+        settings.setTheme(themeComboBox.getSelectedItem().toString());
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,14 +66,13 @@ public class SettingsDialog extends javax.swing.JDialog {
         timerText = new javax.swing.JLabel();
         showHintText = new javax.swing.JLabel();
         themeText = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        saveButton = new javax.swing.JButton();
+        themeComboBox = new javax.swing.JComboBox<>();
         soundEffectToggleButton = new javax.swing.JToggleButton();
-        jSlider1 = new javax.swing.JSlider();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
-        jToggleButton4 = new javax.swing.JToggleButton();
-        jButton2 = new javax.swing.JButton();
+        volumeSlider = new javax.swing.JSlider();
+        endlessModeToggleButton = new javax.swing.JToggleButton();
+        timerToggleButton = new javax.swing.JToggleButton();
+        showHintToggleButton = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
@@ -89,22 +109,24 @@ public class SettingsDialog extends javax.swing.JDialog {
         themeText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         themeText.setText("Theme");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton1.setText("Save");
+        saveButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Light", "Dark" }));
+        themeComboBox.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        themeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Light", "Dark" }));
 
         soundEffectToggleButton.setText("On");
 
-        jToggleButton2.setText("On");
+        endlessModeToggleButton.setText("On");
 
-        jToggleButton3.setText("On");
+        timerToggleButton.setText("On");
 
-        jToggleButton4.setText("On");
-
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton2.setText("Back");
+        showHintToggleButton.setText("On");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -122,14 +144,14 @@ public class SettingsDialog extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                                 .addComponent(themeText)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(themeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(volumeText)
                                         .addGap(64, 64, 64)
-                                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(endlessModeText)
@@ -137,15 +159,13 @@ public class SettingsDialog extends javax.swing.JDialog {
                                             .addComponent(showHintText))
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jToggleButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))))
+                                            .addComponent(endlessModeToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(timerToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(showHintToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
@@ -155,28 +175,26 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(soundEffectText)
                     .addComponent(themeText)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(themeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(soundEffectToggleButton))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(volumeText)
-                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(endlessModeText)
-                    .addComponent(jToggleButton2))
+                    .addComponent(endlessModeToggleButton))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(timerText)
-                    .addComponent(jToggleButton3))
+                    .addComponent(timerToggleButton))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(showHintText)
-                    .addComponent(jToggleButton4))
+                    .addComponent(showHintToggleButton))
                 .addGap(55, 55, 55)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addComponent(saveButton)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -204,6 +222,11 @@ public class SettingsDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+        saveSettings();
+    }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -244,24 +267,23 @@ public class SettingsDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel endlessModeText;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JToggleButton endlessModeToggleButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
-    private javax.swing.JToggleButton jToggleButton4;
+    private javax.swing.JButton saveButton;
     private javax.swing.JLabel showHintText;
+    private javax.swing.JToggleButton showHintToggleButton;
     private javax.swing.JLabel soundEffectText;
     private javax.swing.JToggleButton soundEffectToggleButton;
+    private javax.swing.JComboBox<String> themeComboBox;
     private javax.swing.JLabel themeText;
     private javax.swing.JLabel timerText;
+    private javax.swing.JToggleButton timerToggleButton;
+    private javax.swing.JSlider volumeSlider;
     private javax.swing.JLabel volumeText;
     // End of variables declaration//GEN-END:variables
 }

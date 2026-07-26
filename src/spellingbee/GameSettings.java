@@ -14,6 +14,7 @@ public class GameSettings {
     private boolean timerEnabled = true;
     private boolean showHintEnabled = true;
     private String theme = "Light";
+    private String difficulty = "Medium";
     
     public GameSettings(){
     }
@@ -57,5 +58,14 @@ public class GameSettings {
     public void setTheme(String theme){
         this.theme = theme;
     }
+    
+    public String getDifficulty(){
+        return difficulty;
+    }
+    
+    public void setDifficulty(String difficulty){
+        this.difficulty = difficulty;
+    }
+    
     
 }

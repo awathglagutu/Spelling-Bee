@@ -14,17 +14,17 @@ public class GameFrame extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GameFrame.class.getName());
     ArrayList<Word> words = new ArrayList<>();
     Word currentWord;
+    private GameSettings settings;
     
     int score = 0;
     int questionNumber = 0;
     private GameTimer gameTimer;
-    String difficulty;
     
     
     /**
      * Creates new form mainInterface
      */
-    public GameFrame(String difficulty) {
+    public GameFrame(GameSettings settings) {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -33,18 +33,24 @@ public class GameFrame extends javax.swing.JFrame {
         hintTextArea.setWrapStyleWord(true);
         hintTextArea.setEditable(false);
         hintTextArea.setOpaque(true);
-        
-        this.difficulty = difficulty;
-        
         answerField.setEnabled(false);
         submitButton.setEnabled(false);
+        
+        this.settings = settings;
+        
+        soundEffectLabel.setText("Sound Enabled: " + settings.isSoundEnabled());
+        endlessModeLabel.setText("Endless Mode Enabled: " + settings.isEndlessModeEnabled());
+        timerLabel.setText("Timer Enabled: " + settings.isTimerEnabled());
+        showHintLabel.setText("Show Hint Enabled: " + settings.isShowHintEnabled());
+        difficultyLabel.setText("Difficulty: " + settings.getDifficulty());
         
         words = WorldLoader.loadWords("words.txt");
         gameTimer = new GameTimer(10,
         () -> timerProgress.setValue(gameTimer.getTimeLeft()),
         () -> evaluateAnswer());
     }
-        
+
+    
     private void startGame(){
         score = 0;
         scoresLabel.setText(String.valueOf(score));
@@ -98,8 +104,14 @@ public class GameFrame extends javax.swing.JFrame {
         hintTextArea = new javax.swing.JTextArea();
         timerText = new javax.swing.JLabel();
         timerProgress = new javax.swing.JProgressBar();
+        soundEffectLabel = new javax.swing.JLabel();
+        showHintLabel = new javax.swing.JLabel();
+        endlessModeLabel = new javax.swing.JLabel();
+        timerLabel = new javax.swing.JLabel();
+        difficultyLabel = new javax.swing.JLabel();
         spellText = new javax.swing.JLabel();
         startButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -142,6 +154,16 @@ public class GameFrame extends javax.swing.JFrame {
 
         timerProgress.setMaximum(10);
 
+        soundEffectLabel.setText("jLabel1");
+
+        showHintLabel.setText("jLabel2");
+
+        endlessModeLabel.setText("jLabel3");
+
+        timerLabel.setText("jLabel4");
+
+        difficultyLabel.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -151,7 +173,14 @@ public class GameFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(270, 270, 270))
+                        .addGap(107, 107, 107)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(soundEffectLabel)
+                            .addComponent(showHintLabel)
+                            .addComponent(endlessModeLabel)
+                            .addComponent(timerLabel)
+                            .addComponent(difficultyLabel))
+                        .addGap(126, 126, 126))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(wordLabel)
                         .addGap(325, 325, 325))))
@@ -161,7 +190,7 @@ public class GameFrame extends javax.swing.JFrame {
                     .addComponent(hint)
                     .addComponent(answerText)
                     .addComponent(scoresText))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(answerField, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -190,15 +219,28 @@ public class GameFrame extends javax.swing.JFrame {
                     .addComponent(answerField, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(answerText))
                 .addGap(35, 35, 35)
-                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(scoresText)
-                        .addComponent(scoresLabel)
-                        .addComponent(timerText))
-                    .addComponent(timerProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(79, 79, 79))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(scoresText)
+                                .addComponent(scoresLabel)
+                                .addComponent(timerText))
+                            .addComponent(timerProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(79, 79, 79))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(soundEffectLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(showHintLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(endlessModeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(timerLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(difficultyLabel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         spellText.setFont(new java.awt.Font("Segoe UI Emoji", 0, 18)); // NOI18N
@@ -213,6 +255,14 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
+        backButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -222,7 +272,9 @@ public class GameFrame extends javax.swing.JFrame {
                 .addComponent(spellText)
                 .addGap(35, 35, 35)
                 .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(587, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -231,7 +283,8 @@ public class GameFrame extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spellText)
-                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -290,6 +343,13 @@ public class GameFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_startButtonActionPerformed
 
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // TODO add your handling code here:
+        MainMenuFrame main = new MainMenuFrame(settings);
+        main.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -312,21 +372,27 @@ public class GameFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GameFrame("Normal").setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GameFrame(new GameSettings()).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField answerField;
     private javax.swing.JLabel answerText;
+    private javax.swing.JButton backButton;
+    private javax.swing.JLabel difficultyLabel;
+    private javax.swing.JLabel endlessModeLabel;
     private javax.swing.JLabel hint;
     private javax.swing.JTextArea hintTextArea;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel scoresLabel;
     private javax.swing.JLabel scoresText;
+    private javax.swing.JLabel showHintLabel;
+    private javax.swing.JLabel soundEffectLabel;
     private javax.swing.JLabel spellText;
     private javax.swing.JButton startButton;
     private javax.swing.JButton submitButton;
+    private javax.swing.JLabel timerLabel;
     private javax.swing.JProgressBar timerProgress;
     private javax.swing.JLabel timerText;
     private javax.swing.JLabel wordLabel;

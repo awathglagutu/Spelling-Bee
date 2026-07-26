@@ -9,8 +9,10 @@ package spellingbee;
  * @author adamh
  */
 public class Main {
+    
     public static void main(String[]args){
         //new GameFrame().setVisible(true);
-        new MainMenuFrame().setVisible(true);
+        GameSettings settings = new GameSettings();
+        new MainMenuFrame(settings).setVisible(true);
     }
 }
