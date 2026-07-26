@@ -18,18 +18,23 @@ public class GameFrame extends javax.swing.JFrame {
     int score = 0;
     int questionNumber = 0;
     private GameTimer gameTimer;
+    String difficulty;
     
     
     /**
      * Creates new form mainInterface
      */
-    public GameFrame() {
+    public GameFrame(String difficulty) {
         initComponents();
+        setResizable(false);
+        setLocationRelativeTo(null);
         //modifying hintTextArea
         hintTextArea.setLineWrap(true);
         hintTextArea.setWrapStyleWord(true);
         hintTextArea.setEditable(false);
         hintTextArea.setOpaque(true);
+        
+        this.difficulty = difficulty;
         
         answerField.setEnabled(false);
         submitButton.setEnabled(false);
@@ -156,7 +161,7 @@ public class GameFrame extends javax.swing.JFrame {
                     .addComponent(hint)
                     .addComponent(answerText)
                     .addComponent(scoresText))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(answerField, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -212,13 +217,13 @@ public class GameFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(spellText)
                 .addGap(35, 35, 35)
                 .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(587, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,7 +312,7 @@ public class GameFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GameFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GameFrame("Normal").setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
