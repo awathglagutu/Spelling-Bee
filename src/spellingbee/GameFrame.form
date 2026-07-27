@@ -74,6 +74,7 @@
                               <Component id="endlessModeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="timerLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="difficultyLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="volumeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
                       </Group>
@@ -151,6 +152,8 @@
                           <Component id="timerLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="difficultyLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="volumeLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -274,6 +277,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="difficultyLabel">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="jLabel1"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="volumeLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel1"/>
           </Properties>

@@ -9,14 +9,26 @@ package spellingbee;
  * @author adamh
  */
 public class GameSettings {
-    private boolean soundEnabled = true;
-    private boolean endlessModeEnabled = true;
-    private boolean timerEnabled = true;
-    private boolean showHintEnabled = true;
-    private String theme = "Light";
-    private String difficulty = "Medium";
+    private boolean soundEnabled;
+    private boolean endlessModeEnabled;
+    private boolean timerEnabled;
+    private boolean showHintEnabled;
+    private String theme;
+    private String difficulty;
+    private int volume;
     
     public GameSettings(){
+        resetToDefault();
+    }
+    
+    public void resetToDefault(){
+        soundEnabled = true;
+        endlessModeEnabled = true;
+        timerEnabled = true;
+        showHintEnabled = true;
+        theme = "Light";
+        difficulty = "Medium";
+        volume = 80;
     }
     
     public boolean isSoundEnabled(){
@@ -67,5 +79,12 @@ public class GameSettings {
         this.difficulty = difficulty;
     }
     
+    public void setVolume(int volume){
+        this.volume = volume;
+    }
+    
+    public int getVolume(){
+        return volume;
+    }
     
 }
