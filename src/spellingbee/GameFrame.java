@@ -43,6 +43,7 @@ public class GameFrame extends javax.swing.JFrame {
         timerLabel.setText("Timer Enabled: " + settings.isTimerEnabled());
         showHintLabel.setText("Show Hint Enabled: " + settings.isShowHintEnabled());
         difficultyLabel.setText("Difficulty: " + settings.getDifficulty());
+        volumeLabel.setText("Volume: " + settings.getVolume());
         
         words = WorldLoader.loadWords("words.txt");
         gameTimer = new GameTimer(10,
@@ -80,8 +81,8 @@ public class GameFrame extends javax.swing.JFrame {
     }
     
     private void playCurrentQuestion(){
-        AudioPlayer.playAudio("audio/canyouspell.wav");
-        AudioPlayer.playAudio(currentWord.getAudioPath());
+        AudioPlayer.playAudio("audio/canyouspell.wav", settings);
+        AudioPlayer.playAudio(currentWord.getAudioPath(), settings);
     } 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,6 +110,7 @@ public class GameFrame extends javax.swing.JFrame {
         endlessModeLabel = new javax.swing.JLabel();
         timerLabel = new javax.swing.JLabel();
         difficultyLabel = new javax.swing.JLabel();
+        volumeLabel = new javax.swing.JLabel();
         spellText = new javax.swing.JLabel();
         startButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
@@ -164,6 +166,8 @@ public class GameFrame extends javax.swing.JFrame {
 
         difficultyLabel.setText("jLabel1");
 
+        volumeLabel.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -179,7 +183,8 @@ public class GameFrame extends javax.swing.JFrame {
                             .addComponent(showHintLabel)
                             .addComponent(endlessModeLabel)
                             .addComponent(timerLabel)
-                            .addComponent(difficultyLabel))
+                            .addComponent(difficultyLabel)
+                            .addComponent(volumeLabel))
                         .addGap(126, 126, 126))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(wordLabel)
@@ -240,6 +245,8 @@ public class GameFrame extends javax.swing.JFrame {
                         .addComponent(timerLabel)
                         .addGap(18, 18, 18)
                         .addComponent(difficultyLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(volumeLabel)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -299,11 +306,11 @@ public class GameFrame extends javax.swing.JFrame {
         
         if(answer.equalsIgnoreCase(currentWord.getSpelling())){
             scoresLabel.setText(String.valueOf(++score));
-            AudioPlayer.playSound("sound/correct.wav");
+            AudioPlayer.playSound("sound/correct.wav", settings);
             JOptionPane.showMessageDialog(this, "Correct!");
         }
         else {
-            AudioPlayer.playSound("sound/incorrect.wav");
+            AudioPlayer.playSound("sound/incorrect.wav", settings);
             JOptionPane.showMessageDialog(this, "Correct Answer: " + currentWord.getSpelling(), "Wrong Answer!", JOptionPane.ERROR_MESSAGE);
             gameOver();
             return;
@@ -395,6 +402,7 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JLabel timerLabel;
     private javax.swing.JProgressBar timerProgress;
     private javax.swing.JLabel timerText;
+    private javax.swing.JLabel volumeLabel;
     private javax.swing.JLabel wordLabel;
     // End of variables declaration//GEN-END:variables
 }
