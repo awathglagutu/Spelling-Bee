@@ -16,6 +16,7 @@ public class GameSettings {
     private String theme;
     private String difficulty;
     private int volume;
+    private int questions;
     
     public GameSettings(){
         resetToDefault();
@@ -29,6 +30,7 @@ public class GameSettings {
         theme = "Light";
         difficulty = "Medium";
         volume = 80;
+        questions = 20;
     }
     
     public boolean isSoundEnabled(){
@@ -85,6 +87,14 @@ public class GameSettings {
     
     public int getVolume(){
         return volume;
+    }
+    
+    public void setQuestions(int questions){
+        this.questions = questions;
+    }
+    
+    public int getQuestions(){
+        return questions;
     }
     
 }

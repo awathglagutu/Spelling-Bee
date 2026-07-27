@@ -17,7 +17,7 @@ public class GameFrame extends javax.swing.JFrame {
     private GameSettings settings;
     
     int score = 0;
-    int questionNumber = 0;
+    int questionsCount = 0;
     private GameTimer gameTimer;
     
     
@@ -62,6 +62,13 @@ public class GameFrame extends javax.swing.JFrame {
     }
     
     private void loadNextQuestion(){
+        
+        if(!settings.isEndlessModeEnabled() && questionsCount >= settings.getQuestions()){
+            gameOver();
+            return;
+        }
+        
+        questionsCount++;
         nextWord();
         playCurrentQuestion();
         timerProgress.setValue(timerProgress.getMaximum());
@@ -354,6 +361,7 @@ public class GameFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         MainMenuFrame main = new MainMenuFrame(settings);
         main.setVisible(true);
+        gameTimer.stop();
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
