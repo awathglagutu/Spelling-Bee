@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package spellingbee;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -22,10 +26,16 @@ public class SettingsDialog extends javax.swing.JDialog {
         initComponents();
         this.settings = settings;
         
+        
+        SpinnerNumberModel model = new SpinnerNumberModel(settings.getQuestions(), 5, 100, 5);
+        questionSpinner.setModel(model);
+        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) questionSpinner.getEditor();
+        editor.getTextField().setEditable(false);
+        
         setResizable(false);
         setLocationRelativeTo(parent);
         loadSettings();
-    }
+    } 
     
     private void loadSettings(){
         soundEffectToggleButton.setSelected(settings.isSoundEnabled());
@@ -35,6 +45,7 @@ public class SettingsDialog extends javax.swing.JDialog {
         
         themeComboBox.setSelectedItem(settings.getTheme());
         volumeSlider.setValue(settings.getVolume());
+        questionSpinner.setEnabled(!settings.isEndlessModeEnabled());
     }
     
     private void saveSettings(){
@@ -45,6 +56,11 @@ public class SettingsDialog extends javax.swing.JDialog {
         
         settings.setTheme(themeComboBox.getSelectedItem().toString());
         settings.setVolume(volumeSlider.getValue());
+        settings.setQuestions(Integer.parseInt(questionSpinner.getValue().toString()));
+    }
+    
+    private void updateControls(){
+      questionSpinner.setEnabled(!endlessModeToggleButton.isSelected());
     }
     
     
@@ -77,6 +93,7 @@ public class SettingsDialog extends javax.swing.JDialog {
         showHintToggleButton = new javax.swing.JToggleButton();
         endlessModeToggleButton = new javax.swing.JToggleButton();
         resetButton = new javax.swing.JButton();
+        questionSpinner = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
@@ -131,12 +148,24 @@ public class SettingsDialog extends javax.swing.JDialog {
         showHintToggleButton.setText("On");
 
         endlessModeToggleButton.setText("On");
+        endlessModeToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                endlessModeToggleButtonActionPerformed(evt);
+            }
+        });
 
         resetButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         resetButton.setText("Reset");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetButtonActionPerformed(evt);
+            }
+        });
+
+        questionSpinner.setName(""); // NOI18N
+        questionSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                questionSpinnerStateChanged(evt);
             }
         });
 
@@ -147,23 +176,32 @@ public class SettingsDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(volumeText)
-                                .addGap(64, 64, 64)
-                                .addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(endlessModeText)
-                                    .addComponent(timerText)
-                                    .addComponent(showHintText))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(timerToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(showHintToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                                    .addComponent(endlessModeToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(volumeText)
+                                        .addGap(64, 64, 64)
+                                        .addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(endlessModeText)
+                                            .addComponent(timerText)
+                                            .addComponent(showHintText))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(timerToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(showHintToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                                            .addComponent(endlessModeToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(27, 27, 27)
+                                        .addComponent(questionSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(soundEffectText)
                         .addGap(32, 32, 32)
@@ -172,12 +210,7 @@ public class SettingsDialog extends javax.swing.JDialog {
                         .addComponent(themeText)
                         .addGap(18, 18, 18)
                         .addComponent(themeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20)))
                 .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
@@ -198,7 +231,9 @@ public class SettingsDialog extends javax.swing.JDialog {
                         .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(endlessModeText)
-                            .addComponent(endlessModeToggleButton))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(endlessModeToggleButton)
+                                .addComponent(questionSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(timerText)
@@ -251,6 +286,15 @@ public class SettingsDialog extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(this, "Settings have been reset to default.");
     }//GEN-LAST:event_resetButtonActionPerformed
 
+    private void questionSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_questionSpinnerStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_questionSpinnerStateChanged
+
+    private void endlessModeToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endlessModeToggleButtonActionPerformed
+        // TODO add your handling code here:
+        updateControls();
+    }//GEN-LAST:event_endlessModeToggleButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -297,6 +341,7 @@ public class SettingsDialog extends javax.swing.JDialog {
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner questionSpinner;
     private javax.swing.JButton resetButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel showHintText;
