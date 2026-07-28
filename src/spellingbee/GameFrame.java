@@ -36,6 +36,8 @@ public class GameFrame extends javax.swing.JFrame {
         answerField.setEnabled(false);
         submitButton.setEnabled(false);
         
+        if(!settings.isTimerEnabled()){timerProgress.setVisible(false);timerText.setVisible(false);}
+        
         this.settings = settings;
         
         soundEffectLabel.setText("Sound Enabled: " + settings.isSoundEnabled());
@@ -50,7 +52,7 @@ public class GameFrame extends javax.swing.JFrame {
         () -> timerProgress.setValue(gameTimer.getTimeLeft()),
         () -> evaluateAnswer());
     }
-
+    
     
     private void startGame(){
         score = 0;
@@ -71,8 +73,11 @@ public class GameFrame extends javax.swing.JFrame {
         questionsCount++;
         nextWord();
         playCurrentQuestion();
-        timerProgress.setValue(timerProgress.getMaximum());
-        gameTimer.restart();
+        
+        if(settings.isTimerEnabled()){
+            timerProgress.setValue(timerProgress.getMaximum());
+            gameTimer.restart();
+        }
     }
     
     private void nextWord(){
@@ -328,6 +333,7 @@ public class GameFrame extends javax.swing.JFrame {
     private void gameOver(){
         gameTimer.stop();
         timerProgress.setValue(timerProgress.getMinimum());
+        questionsCount = 0;
         
         JOptionPane.showMessageDialog(
         this, "Game Over!\nYour scores: " + score,
