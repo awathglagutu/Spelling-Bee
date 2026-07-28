@@ -277,6 +277,7 @@ public class SettingsDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         saveSettings();
         JOptionPane.showMessageDialog(this, "Settings have been saved.");
+        this.dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
